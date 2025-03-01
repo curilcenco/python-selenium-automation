@@ -9,7 +9,7 @@ driver_path = ChromeDriverManager().install()
 
 # create a new Chrome browser instance
 service = Service(driver_path)
-driver = webdriver.Chrome(service=service)
+driver = webdriver.Chrome()
 driver.maximize_window()
 
 # open the url
@@ -25,6 +25,8 @@ sleep(4)
 
 # click search button
 driver.find_element(By.NAME, 'btnK').click()
+
+sleep(5)
 
 # verify search results
 assert 'car'.lower() in driver.current_url.lower(), f"Expected query not in {driver.current_url.lower()}"
