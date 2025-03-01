@@ -9,7 +9,7 @@ driver_path = ChromeDriverManager().install()
 
 # create a new Chrome browser instance
 service = Service(driver_path)
-driver = webdriver.Chrome()
+driver = webdriver.Chrome(service=service)
 driver.maximize_window()
 
 # open the url
