@@ -1,10 +1,10 @@
 Feature: Target search test cases
 
-#  Scenario: User can search for a tea on Target
-#    Given Open target main page
-#    When Search for tea
-#    Then Verify correct search results shown for tea
-#
+  Scenario: User can search for a tea on Target
+    Given Open target main page
+    When Search for tea
+    Then Verify correct search results shown for tea
+
 #  Scenario: User can search for a iPhone on Target
 #    Given Open target main page
 #    When Search for iPhone
@@ -34,3 +34,8 @@ Feature: Target search test cases
     And Open cart page
     Then Verify cart has 1 item(s)
     Then Verify cart has correct product
+
+  Scenario: Verify that user can see product names and images
+    Given Open target main page
+    When Search for AirPods (3rd Generation)
+    Then Verify that every product has a name and an image
