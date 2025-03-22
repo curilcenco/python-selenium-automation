@@ -4,19 +4,13 @@ from behave import given, when, then
 from time import sleep
 
 
-SEARCH_FIELD = (By.ID, 'search')
-SEARCH_BTN = (By.XPATH, "//button[@data-test='@web/Search/SearchButton']")
-CART_ICON = (By.CSS_SELECTOR, "[data-test='@web/CartLink']")
 HEADER_LINKS = (By.CSS_SELECTOR, "[id*='utilityNav']")
 
 
 @given('Open target main page')
 def open_target_main(context):
     context.app.main_page.open_main_page()
-    context.driver.wait.until(
-        EC.element_to_be_clickable(SEARCH_FIELD),
-        message='Search field not clickable'
-    )
+
 
 @when('Search for {search_word}')
 def search_product(context, search_word):
@@ -25,13 +19,19 @@ def search_product(context, search_word):
 
 @when('Click on Cart icon')
 def click_cart(context):
-    context.driver.find_element(*CART_ICON).click()
+    context.app.header.click_cart()
 
 
 @then('Verify at least 1 link shown')
 def verify_1_header_link_shown(context):
     link = context.driver.find_element(*HEADER_LINKS)
     print(link)
+    # Stale Element Reference Ex
+    # print("Before refresh:", link)
+    # context.driver.refresh()
+    # link = context.driver.find_element(*HEADER_LINKS)
+    # link.click()
+    # print("AFTER refresh:", link)
 
 
 @then('Verify {link_amount} links shown')
