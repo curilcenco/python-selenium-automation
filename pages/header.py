@@ -7,7 +7,6 @@ class Header(Page):
     CART_ICON = (By.CSS_SELECTOR, "[data-test='@web/CartLink']")
 
     def search(self, text):
-        print(f'Searching for {text}')
         self.input_text(text, *self.SEARCH_FIELD)
         self.click(*self.SEARCH_BTN)
 
