@@ -3,7 +3,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from behave import given, when, then
 from time import sleep
 
-
 SEARCH_FIELD = (By.ID, 'search')
 SEARCH_BTN = (By.XPATH, "//button[@data-test='@web/Search/SearchButton']")
 CART_ICON = (By.CSS_SELECTOR, "[data-test='@web/CartLink']")
@@ -25,7 +24,7 @@ def search_product(context, search_word):
 
 @when('Click on Cart icon')
 def click_cart(context):
-    context.driver.find_element(*CART_ICON).click()
+    context.app.product_page.click_cart_logo()
 
 
 @then('Verify at least 1 link shown')

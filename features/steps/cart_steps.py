@@ -33,3 +33,14 @@ def verify_cart_empty(context):
     assert expected_result == actual_result, f'Expected {expected_result} did not match actual {actual_result}'
 
 
+@given('target.com')
+def open_cart(context):
+    context.driver.get('https://www.target.com/cart')
+
+@when('Click on Cart ico')
+def click_cart_c(context):
+    context.app.product_page.click_cart_logo()
+
+@then('Verify message “Your cart is empty”')
+def verify_message_empty(context):
+    context.app.product_page.verify_empty_cart()
