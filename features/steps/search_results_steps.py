@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-from behave import given, when, then
+from behave import  when, then
 from time import sleep
 
 
@@ -59,3 +59,24 @@ def verify_products_name_img(context):
         assert title, 'Product title not shown'
         print(title)
         product.find_element(*PRODUCT_IMG)
+
+
+@then ('Push the button add to the cart')
+def click_add_button_to_cart(context):
+    context.app.product_page.find_add_to_cart()
+
+@then ('Click on the cart button add')
+def click_add_to_cart_button(context):
+    context.app.product_page.click_add_to_cart()
+
+@then('Add product in Side Menu')
+def add_product_side(context):
+    context.app.product_page.click_add_to_cart_side()
+
+@then('View Cart button and Check Out')
+def view_cart_button(context):
+    context.app.product_page.click_view_card()
+
+@then('Verify product in cart')
+def verify_product_cart(context):
+    context.app.product_page.product_exists_in_cart()

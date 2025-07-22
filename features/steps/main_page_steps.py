@@ -40,3 +40,20 @@ def verify_all_header_links_shown(context, link_amount):
     links = context.driver.find_elements(*HEADER_LINKS)
     print(links)
     assert len(links) == link_amount, f'Expected {link_amount} links, but got {len(links)}'
+
+
+@given('Open target')
+def open_cart(context):
+    context.driver.get('https://www.target.com/')
+
+@when('Click Sign In')
+def click_sign_in(context):
+    context.app.side_menu_page.click_sign_account()
+
+@when('Side navigation menu')
+def side_navigation_menu_click(context):
+    context.app.side_menu_page.click_sign_in_side()
+
+@then('Verify Sign In')
+def verify_sign_in(context):
+    context.app.side_menu_page.verify_side_partial_url("login")

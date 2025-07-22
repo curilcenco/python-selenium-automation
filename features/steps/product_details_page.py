@@ -31,3 +31,46 @@ def click_and_verify_colors(context):
         print(actual_colors)
 
     assert expected_colors == actual_colors, f'Expected {expected_colors} did not match actual {actual_colors}'
+
+
+
+
+
+from behave import given, when, then
+from time import sleep
+
+
+# @then('Verify search results shown for {product}')
+# def verify_search_results(context, product):
+#     context.app.search_results_page.verify_search_results(product)
+#
+#
+# @then('Verify search term {product} in URL')
+# def verify_search_url(context, product):
+#     context.app.search_results_page.verify_search_url(product)
+@given('Open target main')
+def open_cart(context):
+    context.driver.get('https://www.target.com/')
+
+@when('Add product to cart from search results')
+def click_add_to_c(context):
+    context.app.product_page.click_add_to_cart()
+
+
+@when('Store product info')
+def store_product_name(context):
+    locator = context.app.search_results_page.PRODUCT_NAME
+    context.product_name = context.app.search_results_page.get_product_name_click(locator)
+    print(f'Product stored: {context.product_name}')
+
+
+@when('Confirm Add Cart button from side navigation')
+def side_nav_click_add_to_cart(context):
+    context.app.search_results_page.get_product_name_click()
+    # context.driver.find_element(*ADD_TO_CART_SIDE_NAV_BTN)
+    sleep(4)
+
+
+@then('Verify that every product has name and image')
+def verify_products_name_img(context):
+    context.app.product_page.verify_products_name_i()
