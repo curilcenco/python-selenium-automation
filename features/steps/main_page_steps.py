@@ -1,5 +1,4 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
 from behave import given, when, then
 from time import sleep
 
@@ -40,3 +39,40 @@ def verify_all_header_links_shown(context, link_amount):
     links = context.driver.find_elements(*HEADER_LINKS)
     print(links)
     assert len(links) == link_amount, f'Expected {link_amount} links, but got {len(links)}'
+
+@given('Open target main')
+def open_main_first(context):
+    context.driver.get("https://www.target.com/")
+
+@when('Click Account')
+def click_account_main(context):
+    context.app.main_page.click_account()
+
+@when('Sign in')
+def click_sign_in_side(context):
+    context.app.main_page.click_sign_in()
+
+@when('Enters correct email and click Continue')
+def enters_correct_email(context):
+    context.app.main_page.input_email()
+    sleep(2)
+
+@when('Click Continue')
+def click_continue(context):
+    context.app.main_page.continue_button()
+
+
+@when('Incorrect password')
+def incorrect_password(context):
+    context.app.main_page.input_password('1234QWerty')
+    sleep(2)
+
+
+@when('Clicks Sign in with password')
+def clicks_sign_in_pass(context):
+    context.app.main_page.continue_button()
+
+@then('Verifies that an error message is shown')
+def verify_error_message(context):
+    context.app.main_page.verify_passport_incorrect_msg("incorrect")
+    sleep(5)
