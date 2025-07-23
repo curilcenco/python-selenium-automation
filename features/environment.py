@@ -2,11 +2,13 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.wait import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
-from webdriver_manager.firefox import GeckoDriverManager
-from selenium.webdriver.chrome.options import Options
+
 
 from app.application import Application
 from support.logger import logger
+import os
+import allure
+from datetime import datetime
 
 
 # Command to run tests with Allure & Behave:
@@ -15,6 +17,7 @@ from support.logger import logger
 
 def browser_init(context, scenario_name):
     """
+    :param scenario_name:
     :param context: Behave context
     """
     driver_path = ChromeDriverManager().install()
@@ -76,5 +79,28 @@ def after_step(context, step):
         print('\nStep failed: ', step)
 
 
-def after_scenario(context, feature):
+def after_scenario(context):
     context.driver.quit()
+
+
+def after_step_allure(context, step):
+    if step.status == 'failed':
+        print('\n❌ Step failed: ', step.name)
+
+        screenshots_dir = 'screenshots'
+        if not os.path.exists(screenshots_dir):
+            os.makedirs(screenshots_dir)
+
+        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        scenario_name = context.scenario.name.replace(" ", "_")
+        step_name = step.name.replace(" ", "_")
+        screenshot_name = f"{scenario_name}__{step_name}__{timestamp}.png"
+        screenshot_path = os.path.join(screenshots_dir, screenshot_name)
+
+        context.driver.save_screenshot(screenshot_path)
+
+        allure.attach.file(
+            screenshot_path,
+            name=f"Screenshot_{step.name}",
+            attachment_type=allure.attachment_type.PNG
+        )

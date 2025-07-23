@@ -1,11 +1,13 @@
 Feature: Tests for Help pages
 
+  @smoke
   Scenario: User can select Help topic Promotions & Coupons
     Given Open Help page for Returns
     Then Verify help Returns page opened
     When Select Help topic Promotions & Coupons
     Then Verify help Current promotions page opened
 
+  @smoke
   Scenario: User can select Help topic Target Circle
     Given Open Help page for Returns
     Then Verify help Returns page opened
